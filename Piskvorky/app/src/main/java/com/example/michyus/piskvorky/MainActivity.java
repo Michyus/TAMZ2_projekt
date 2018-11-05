@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener listener_newGame = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "listener_newGame", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, NewGameActivity.class);
+            startActivity(intent);
         }
     };
 
