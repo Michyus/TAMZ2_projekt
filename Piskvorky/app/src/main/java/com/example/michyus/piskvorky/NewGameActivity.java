@@ -25,7 +25,7 @@ public class NewGameActivity extends AppCompatActivity {
     View.OnClickListener listener_standardGame = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(NewGameActivity.this, GameActiviry.class);
+            Intent intent = new Intent(NewGameActivity.this, GameActivity.class);
             // TODO send Extra to GameActivity grid size, AI Difficulty/2 players
             startActivity(intent);
         }
