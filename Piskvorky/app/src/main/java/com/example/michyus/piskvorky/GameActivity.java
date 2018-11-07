@@ -23,6 +23,6 @@ public class GameActivity extends AppCompatActivity {
         gameFrame = findViewById(R.id.gameFrame);
 
         gameFrame.addView(new Graphics(this, gameEngine));
-        gameFrame.setOnTouchListener(new TouchListener());
+        gameFrame.setOnTouchListener(new TouchListener(gameEngine));
     }
 }
