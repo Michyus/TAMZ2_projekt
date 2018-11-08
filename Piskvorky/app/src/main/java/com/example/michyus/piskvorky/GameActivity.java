@@ -10,7 +10,7 @@ public class GameActivity extends AppCompatActivity {
     private GameEngine gameEngine;
     private FrameLayout gameFrame;
 
-    TextView textView_moveOf;
+    public TextView textView_moveOf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

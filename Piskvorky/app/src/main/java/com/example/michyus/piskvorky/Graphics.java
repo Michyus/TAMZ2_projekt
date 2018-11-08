@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.view.View;
 
@@ -14,6 +13,7 @@ public class Graphics extends View{
     private Paint mPaint;
     private Bitmap bitmapCircle;
     private Bitmap bitmapCross;
+    private float sizeOfElement;
 
 
     public Graphics(Context context, GameEngine gameEngine) {
@@ -30,6 +30,8 @@ public class Graphics extends View{
         if (gameEngine.getGridSize() == 0){
             gameEngine.setGridSize(canvas.getWidth());
 
+            sizeOfElement = gameEngine.getGridSize() / gameEngine.getGridNumber();
+
             loadAndCreateBitmaps();
         }
 
@@ -45,15 +47,8 @@ public class Graphics extends View{
         bitmapCross = BitmapFactory.decodeResource(this.getResources(), R.drawable.cross);
 
         // Resize bitmaps
-        int size = bitmapCircle.getWidth();
-        float newSize = gameEngine.getGridSize() / gameEngine.getGridNumber();
-        float scaleSize = newSize / size;
-
-        Matrix matrix = new Matrix();
-        matrix.postScale(scaleSize, scaleSize);
-
-        bitmapCircle = Bitmap.createBitmap(bitmapCircle, 0,0, size, size, matrix,true);
-        bitmapCross = Bitmap.createBitmap(bitmapCross, 0,0, size, size, matrix,true);
+        bitmapCircle = Bitmap.createScaledBitmap(bitmapCircle, (int)sizeOfElement, (int)sizeOfElement, true);
+        bitmapCross = Bitmap.createScaledBitmap(bitmapCross, (int)sizeOfElement, (int)sizeOfElement, true);
     }
 
     private void drawPlayers(Canvas canvas){
@@ -69,8 +64,7 @@ public class Graphics extends View{
                         tempBitmap = bitmapCross;
                     }
 
-                    canvas.drawBitmap(tempBitmap, gameEngine.getGridSize() / gameEngine.getGridNumber() * x,
-                            gameEngine.getGridSize() / gameEngine.getGridNumber() * y, mPaint);
+                    canvas.drawBitmap(tempBitmap,sizeOfElement * x,sizeOfElement * y, mPaint);
                 }
             }
         }
@@ -79,12 +73,10 @@ public class Graphics extends View{
     private void drawGrid(Canvas canvas) {
         for (int i = 0; i <= gameEngine.getGridNumber(); i++){
             // Horizontal line
-            canvas.drawLine(0, gameEngine.getGridSize() / gameEngine.getGridNumber() * i,
-                    gameEngine.getGridSize(), gameEngine.getGridSize() / gameEngine.getGridNumber() * i, mPaint);
+            canvas.drawLine(0,sizeOfElement * i, gameEngine.getGridSize(),sizeOfElement * i, mPaint);
 
             // Vertical line
-            canvas.drawLine(gameEngine.getGridSize() / gameEngine.getGridNumber() * i, 0,
-                    gameEngine.getGridSize() / gameEngine.getGridNumber() * i, gameEngine.getGridSize(), mPaint);
+            canvas.drawLine(sizeOfElement * i,0,sizeOfElement * i, gameEngine.getGridSize(), mPaint);
         }
     }
 }
