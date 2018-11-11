@@ -17,7 +17,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        gameEngine = new GameEngine();
+        gameEngine = new GameEngine(this);
 
         textView_moveOf = findViewById(R.id.textView_moveOf);
         gameFrame = findViewById(R.id.gameFrame);
