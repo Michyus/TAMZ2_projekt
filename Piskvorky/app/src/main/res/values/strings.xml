@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Piskvorky</string>
+
+    <string name="dialog_start_player1">Hráč 1</string>
+    <string name="dialog_start_title">Kdo začne?</string>
+    <string name="dialog_start_player2">Hráč 2</string>
 </resources>

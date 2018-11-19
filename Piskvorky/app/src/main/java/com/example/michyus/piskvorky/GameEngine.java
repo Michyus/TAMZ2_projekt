@@ -12,7 +12,7 @@ public class GameEngine {
 
     private float gridSize;
     private Players playerGrid[][];
-    private Players currentPlayer = Players.Player1;
+    private Players currentPlayer;
 
     public TextView textView_moveOf;
 
@@ -25,12 +25,19 @@ public class GameEngine {
         this.gameActivity = gameActivity;
         textView_moveOf = this.gameActivity.findViewById(R.id.textView_moveOf);
 
+        startGame(Players.None);
 
+        new GameStartDialog(this, gameActivity);
+    }
+
+    public void startGame(Players player){
         for (int y = 0; y < GRID_NUMBER; y++){
             for (int x = 0; x < GRID_NUMBER; x++){
                 playerGrid[x][y] = Players.None;
             }
         }
+
+        currentPlayer = player;
     }
 
     public void addMark(int x, int y){
@@ -43,7 +50,6 @@ public class GameEngine {
         if(winner != Players.None){
             Toast.makeText(gameActivity, winner + " has won", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void switchPlayer(){
