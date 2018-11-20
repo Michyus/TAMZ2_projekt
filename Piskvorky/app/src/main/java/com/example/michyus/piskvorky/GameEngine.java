@@ -1,10 +1,13 @@
 package com.example.michyus.piskvorky;
 
 import android.app.Activity;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameEngine {
+
+    //TODO remove UI updates from GameEngine and move them to separate class
 
     private final static int GRID_NUMBER = 12;
 
@@ -15,6 +18,7 @@ public class GameEngine {
     private Players currentPlayer;
 
     public TextView textView_moveOf;
+    public ImageView imageView_moveOf;
 
     protected enum Players{
         None, Player1, Player2
@@ -22,11 +26,13 @@ public class GameEngine {
 
     public GameEngine(Activity gameActivity){
         playerGrid = new Players[GRID_NUMBER][GRID_NUMBER];
+
         this.gameActivity = gameActivity;
+
         textView_moveOf = this.gameActivity.findViewById(R.id.textView_moveOf);
+        imageView_moveOf = this.gameActivity.findViewById(R.id.imageView_moveOf);
 
         startGame(Players.None);
-
         new GameStartDialog(this, gameActivity);
     }
 
@@ -36,7 +42,6 @@ public class GameEngine {
                 playerGrid[x][y] = Players.None;
             }
         }
-
         currentPlayer = player;
     }
 
@@ -48,6 +53,7 @@ public class GameEngine {
         Players winner = checkWhoWon();
 
         if(winner != Players.None){
+            new GameEndDialog(this, gameActivity);
             Toast.makeText(gameActivity, winner + " has won", Toast.LENGTH_SHORT).show();
         }
     }
@@ -55,9 +61,11 @@ public class GameEngine {
     public void switchPlayer(){
         if (currentPlayer == Players.Player1){
             currentPlayer = Players.Player2;
+            imageView_moveOf.setImageResource(R.drawable.cross);
         }
         else {
             currentPlayer = Players.Player1;
+            imageView_moveOf.setImageResource(R.drawable.circle);
         }
         textView_moveOf.setText(currentPlayer.toString());
     }
@@ -79,7 +87,7 @@ public class GameEngine {
     public boolean hasWinner(Players player, int len){
         // Check horizontal
         for(int y=0; y < GRID_NUMBER; y++){
-            for(int x=0; x < GRID_NUMBER-len; x++){
+            for(int x=0; x <= GRID_NUMBER-len; x++){
                 int cnt = 0;
                 for (int n=0; n < len; n++){
                     if (getPlayerAt(x+n, y) == player)
@@ -91,7 +99,7 @@ public class GameEngine {
         }
 
         // Check vertical
-        for(int x=0; x < GRID_NUMBER; x++){
+        for(int x=0; x <= GRID_NUMBER; x++){
             for(int y=0; y < GRID_NUMBER-len; y++){
                 int cnt = 0;
                 for (int n=0; n < len; n++){
@@ -104,7 +112,7 @@ public class GameEngine {
         }
 
         // Check \\\\\\
-        for(int y=0; y < GRID_NUMBER-len; y++){
+        for(int y=0; y <= GRID_NUMBER-len; y++){
             for(int x=0; x < GRID_NUMBER-len; x++){
                 int cnt = 0;
                 for (int n=0; n < len; n++){
@@ -117,7 +125,7 @@ public class GameEngine {
         }
 
         // Check //////
-        for(int y=0; y < GRID_NUMBER-len; y++){
+        for(int y=0; y <= GRID_NUMBER-len; y++){
             for(int x=len; x < GRID_NUMBER; x++){
                 int cnt = 0;
                 for (int n=0; n < len; n++){

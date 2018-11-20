@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
+import android.widget.ImageView;
 
 public class Graphics extends View{
 
@@ -15,6 +16,7 @@ public class Graphics extends View{
     private Bitmap bitmapCross;
     private float sizeOfElement;
 
+    public ImageView imageView_moveOf;
 
     public Graphics(Context context, GameEngine gameEngine) {
         super(context);
