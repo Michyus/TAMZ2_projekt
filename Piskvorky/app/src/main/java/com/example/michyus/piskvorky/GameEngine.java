@@ -12,7 +12,7 @@ public class GameEngine {
 
     private final static int GRID_NUMBER = 12;
 
-    private Activity gameActivity;
+    public Activity gameActivity;
 
     private float gridSize;
     private Players playerGrid[][];

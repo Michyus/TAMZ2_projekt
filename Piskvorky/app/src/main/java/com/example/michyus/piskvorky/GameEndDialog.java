@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 
 public class GameEndDialog extends AlertDialog {
     public GameEndDialog(final GameEngine gameEngine, final Context context) {
         super(context);
+        MediaPlayer mp;
+        mp = MediaPlayer.create(gameEngine.gameActivity, R.raw.cuttingpaper);
 
         setMessage("Nejake info.. kdo vyhral, cas pocet tahu...");
 
@@ -30,6 +33,7 @@ public class GameEndDialog extends AlertDialog {
         this.setCancelable(false);
         this.setCanceledOnTouchOutside(false);
 
+        mp.start();
         show();
     }
 }
