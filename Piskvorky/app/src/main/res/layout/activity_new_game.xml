@@ -7,15 +7,26 @@
     tools:context=".NewGameActivity">
 
     <Button
-        android:id="@+id/button_standardGame"
+        android:id="@+id/button_gameAgainstHuman"
         android:layout_width="289dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Hra pro 2 hráče"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_gameAgainstAI" />
+
+    <Button
+        android:id="@+id/button_gameAgainstAI"
+        android:layout_width="289dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
-        android:text="Standardní hra"
+        android:text="Hra proti AI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_titleNewGame" />

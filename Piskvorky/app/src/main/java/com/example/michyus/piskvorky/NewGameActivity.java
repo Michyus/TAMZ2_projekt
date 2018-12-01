@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 public class NewGameActivity extends AppCompatActivity {
-    Button button_standardGame;
+    Button button_gameAgainstAI;
+    Button button_gameAgainstHuman;
     Button button_customGame;
 
     @Override
@@ -15,18 +16,29 @@ public class NewGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
 
-        button_standardGame = findViewById(R.id.button_standardGame);
+        button_gameAgainstAI = findViewById(R.id.button_gameAgainstAI);
+        button_gameAgainstHuman = findViewById(R.id.button_gameAgainstHuman);
         button_customGame = findViewById(R.id.button_customGame);
 
-        button_standardGame.setOnClickListener(listener_standardGame);
+        button_gameAgainstAI.setOnClickListener(listener_gameAgainstAI);
+        button_gameAgainstHuman.setOnClickListener(listener_gameAgainstHuman);
         button_customGame.setOnClickListener(listener_customGame);
     }
 
-    View.OnClickListener listener_standardGame = new View.OnClickListener() {
+    View.OnClickListener listener_gameAgainstHuman = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(NewGameActivity.this, GameActivity.class);
-            // TODO send Extra to GameActivity grid size, AI Difficulty/2 players
+            intent.putExtra("aiLevel", 0);
+            startActivity(intent);
+        }
+    };
+
+    View.OnClickListener listener_gameAgainstAI = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(NewGameActivity.this, GameActivity.class);
+            intent.putExtra("aiLevel", 1);
             startActivity(intent);
         }
     };

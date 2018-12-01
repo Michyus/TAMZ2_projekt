@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameEngine {
 
@@ -17,6 +18,8 @@ public class GameEngine {
     private Players playerGrid[][];
     private Players currentPlayer;
 
+    private int aiLevel;
+
     public TextView textView_moveOf;
     public ImageView imageView_moveOf;
 
@@ -24,16 +27,18 @@ public class GameEngine {
         None, Player1, Player2
     }
 
-    public GameEngine(Activity gameActivity){
+    public GameEngine(Activity gameActivity, int aiLevel){
         playerGrid = new Players[GRID_NUMBER][GRID_NUMBER];
 
+        this.aiLevel = aiLevel;
         this.gameActivity = gameActivity;
 
         textView_moveOf = this.gameActivity.findViewById(R.id.textView_moveOf);
         imageView_moveOf = this.gameActivity.findViewById(R.id.imageView_moveOf);
 
-        startGame(Players.None);
-        new GameStartDialog(this, gameActivity);
+        startGame(Players.Player1);
+        //startGame(Players.None);
+        //new GameStartDialog(this, gameActivity);
     }
 
     public void startGame(Players player){
@@ -43,6 +48,8 @@ public class GameEngine {
             }
         }
         currentPlayer = player;
+        imageView_moveOf.setImageResource(R.drawable.circle);
+        textView_moveOf.setText(currentPlayer.toString());
     }
 
     public void addMark(int x, int y){
@@ -62,12 +69,28 @@ public class GameEngine {
         if (currentPlayer == Players.Player1){
             currentPlayer = Players.Player2;
             imageView_moveOf.setImageResource(R.drawable.cross);
+            aiMove();
         }
         else {
             currentPlayer = Players.Player1;
             imageView_moveOf.setImageResource(R.drawable.circle);
         }
         textView_moveOf.setText(currentPlayer.toString());
+    }
+
+    private void aiMove(){
+        if (this.aiLevel == 1){
+            boolean placed = false;
+            while (placed == false){
+                int randomX = ThreadLocalRandom.current().nextInt(0, 12);
+                int randomY = ThreadLocalRandom.current().nextInt(0, 12);
+
+                if(getPlayerAt(randomX, randomY) == Players.None){
+                    addMark(randomX, randomY);
+                    placed = true;
+                }
+            }
+        }
     }
 
     public Players checkWhoWon(){
@@ -99,8 +122,8 @@ public class GameEngine {
         }
 
         // Check vertical
-        for(int x=0; x <= GRID_NUMBER; x++){
-            for(int y=0; y < GRID_NUMBER-len; y++){
+        for(int x=0; x < GRID_NUMBER; x++){
+            for(int y=0; y <= GRID_NUMBER-len; y++){
                 int cnt = 0;
                 for (int n=0; n < len; n++){
                     if (getPlayerAt(x, y+n) == player)

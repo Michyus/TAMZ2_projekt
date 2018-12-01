@@ -27,6 +27,9 @@ public class GameEndDialog extends AlertDialog {
             }
         });
 
+        this.setCancelable(false);
+        this.setCanceledOnTouchOutside(false);
+
         show();
     }
 }
