@@ -21,7 +21,8 @@
             android:name=".GameActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Settings" />
-        <activity android:name=".Statistics"></activity>
+        <activity android:name=".Statistics" />
+        <activity android:name=".CustomGameActivity"></activity>
     </application>
 
 </manifest>

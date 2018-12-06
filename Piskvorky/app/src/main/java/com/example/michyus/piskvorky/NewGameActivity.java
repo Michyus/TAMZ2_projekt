@@ -58,9 +58,8 @@ public class NewGameActivity extends AppCompatActivity {
     View.OnClickListener listener_customGame = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            // TODO create new Activity with options
-            //Intent intent = new Intent(NewGameActivity.this, newactivitu.class);
-            //startActivity(intent);
+            Intent intent = new Intent(NewGameActivity.this, CustomGameActivity.class);
+            startActivity(intent);
         }
     };
 }

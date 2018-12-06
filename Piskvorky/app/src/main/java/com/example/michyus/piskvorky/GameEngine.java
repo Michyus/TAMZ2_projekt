@@ -10,13 +10,15 @@ public class GameEngine {
 
     //TODO remove UI updates from GameEngine and move them to separate class
 
-    private final static int GRID_NUMBER = 12;
+    private int GRID_NUMBER = 12;
 
     public Activity gameActivity;
 
     private float gridSize;
     private Players playerGrid[][];
     private Players currentPlayer;
+
+    private int countToWin;
 
     private int aiLevel;
 
@@ -27,18 +29,18 @@ public class GameEngine {
         None, Player1, Player2
     }
 
-    public GameEngine(Activity gameActivity, int aiLevel){
+    public GameEngine(Activity gameActivity, int aiLevel, int size, int countToWin){
         playerGrid = new Players[GRID_NUMBER][GRID_NUMBER];
 
         this.aiLevel = aiLevel;
         this.gameActivity = gameActivity;
+        this.GRID_NUMBER = size;
+        this.countToWin = countToWin;
 
         textView_moveOf = this.gameActivity.findViewById(R.id.textView_moveOf);
         imageView_moveOf = this.gameActivity.findViewById(R.id.imageView_moveOf);
 
         startGame(Players.Player1);
-        //startGame(Players.None);
-        //new GameStartDialog(this, gameActivity);
     }
 
     public void startGame(Players player){
@@ -94,12 +96,10 @@ public class GameEngine {
     }
 
     public Players checkWhoWon(){
-        int length = 4;
-
-        if (hasWinner(Players.Player1, length)){
+        if (hasWinner(Players.Player1, countToWin)){
             return Players.Player1;
         }
-        else if (hasWinner(Players.Player2, length)){
+        else if (hasWinner(Players.Player2, countToWin)){
             return Players.Player2;
         }
 

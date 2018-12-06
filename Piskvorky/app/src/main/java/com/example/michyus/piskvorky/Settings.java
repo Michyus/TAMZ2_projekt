@@ -46,7 +46,6 @@ public class Settings extends AppCompatActivity {
     View.OnClickListener listener_theme = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             if (darkTheme){
                 editor.putBoolean("theme", false);
                 Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
@@ -55,14 +54,19 @@ public class Settings extends AppCompatActivity {
                 editor.putBoolean("theme", true);
                 Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_SHORT).show();
             }
-            editor.commit();
+            editor.apply();
         }
     };
 
     @Override
     public void onStop(){
         super.onStop();
+
+
         Intent intent = new Intent(Settings.this, MainActivity.class);
         startActivity(intent);
+
+
     }
 }
+
