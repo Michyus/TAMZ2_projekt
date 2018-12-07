@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -15,6 +16,9 @@ public class CustomGameActivity extends AppCompatActivity {
 
     SeekBar seekBar_countToWin;
     TextView textView_countToWin;
+
+    EditText editText_name_1;
+    EditText editText_name_2;
 
     Button button_play;
 
@@ -30,6 +34,9 @@ public class CustomGameActivity extends AppCompatActivity {
         seekBar_countToWin = findViewById(R.id.seekBar_countToWin);
         textView_countToWin = findViewById(R.id.textView_countToWin);
 
+        editText_name_1 = findViewById(R.id.editText_name_1);
+        editText_name_2 = findViewById(R.id.editText_name_2);
+
         button_play = findViewById(R.id.button_play);
 
         seekBar_gameGridSize.setOnSeekBarChangeListener(listener_seekBar_gameGridSize);
@@ -42,7 +49,7 @@ public class CustomGameActivity extends AppCompatActivity {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             String size_str = Integer.toString(progress + 3);
-            seekBar_countToWin.setMax(progress);
+            seekBar_countToWin.setMax(progress + 3);
             textView_gameGridSize.setText(size_str);
         }
 
@@ -60,8 +67,7 @@ public class CustomGameActivity extends AppCompatActivity {
     SeekBar.OnSeekBarChangeListener listener_seekBar_countToWin = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            String size_str = Integer.toString(progress + 3);
-
+            String size_str = Integer.toString(progress);
             textView_countToWin.setText(size_str);
         }
 
@@ -85,6 +91,8 @@ public class CustomGameActivity extends AppCompatActivity {
             String count_str = (String) textView_countToWin.getText();
             intent.putExtra("size", Integer.parseInt(size_str));
             intent.putExtra("count", Integer.parseInt(count_str));
+            intent.putExtra("name_1", editText_name_1.getText().toString());
+            intent.putExtra("name_2", editText_name_2.getText().toString());
             startActivity(intent);
         }
     };

@@ -32,8 +32,10 @@ public class GameActivity extends AppCompatActivity {
         int aiLevel = intent.getIntExtra("aiLevel", 0);
         int size = intent.getIntExtra("size", 12);
         int count = intent.getIntExtra("count", 4);
+        String name_1 = intent.getStringExtra("name_1");
+        String name_2 = intent.getStringExtra("name_2");
 
-        gameEngine = new GameEngine(this, aiLevel, size, count);
+        gameEngine = new GameEngine(this, aiLevel, size, count, name_1, name_2);
 
         textView_moveOf = findViewById(R.id.textView_moveOf);
         gameFrame = findViewById(R.id.gameFrame);

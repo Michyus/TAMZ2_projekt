@@ -19,23 +19,28 @@ public class GameEngine {
     private Players currentPlayer;
 
     private int countToWin;
-
     private int aiLevel;
+
+    private String name_1;
+    private String name_2;
 
     public TextView textView_moveOf;
     public ImageView imageView_moveOf;
+
 
     protected enum Players{
         None, Player1, Player2
     }
 
-    public GameEngine(Activity gameActivity, int aiLevel, int size, int countToWin){
+    public GameEngine(Activity gameActivity, int aiLevel, int size, int countToWin, String name_1, String name_2){
         playerGrid = new Players[GRID_NUMBER][GRID_NUMBER];
 
         this.aiLevel = aiLevel;
         this.gameActivity = gameActivity;
         this.GRID_NUMBER = size;
         this.countToWin = countToWin;
+        this.name_1 = name_1;
+        this.name_2 = name_2;
 
         textView_moveOf = this.gameActivity.findViewById(R.id.textView_moveOf);
         imageView_moveOf = this.gameActivity.findViewById(R.id.imageView_moveOf);
@@ -51,7 +56,7 @@ public class GameEngine {
         }
         currentPlayer = player;
         imageView_moveOf.setImageResource(R.drawable.circle);
-        textView_moveOf.setText(currentPlayer.toString());
+        textView_moveOf.setText(name_1);
     }
 
     public void addMark(int x, int y){
@@ -63,7 +68,7 @@ public class GameEngine {
 
         if(winner != Players.None){
             new GameEndDialog(this, gameActivity);
-            Toast.makeText(gameActivity, winner + " has won", Toast.LENGTH_SHORT).show();
+            this.gameActivity.findViewById(R.id.gameFrame).setOnTouchListener(null);
         }
     }
 
@@ -71,13 +76,15 @@ public class GameEngine {
         if (currentPlayer == Players.Player1){
             currentPlayer = Players.Player2;
             imageView_moveOf.setImageResource(R.drawable.cross);
+            textView_moveOf.setText(name_2);
             aiMove();
         }
         else {
             currentPlayer = Players.Player1;
             imageView_moveOf.setImageResource(R.drawable.circle);
+            textView_moveOf.setText(name_1);
         }
-        textView_moveOf.setText(currentPlayer.toString());
+
     }
 
     private void aiMove(){
@@ -102,7 +109,6 @@ public class GameEngine {
         else if (hasWinner(Players.Player2, countToWin)){
             return Players.Player2;
         }
-
 
         return Players.None;
     }
@@ -136,7 +142,7 @@ public class GameEngine {
 
         // Check \\\\\\
         for(int y=0; y <= GRID_NUMBER-len; y++){
-            for(int x=0; x < GRID_NUMBER-len; x++){
+            for(int x=0; x <= GRID_NUMBER-len; x++){
                 int cnt = 0;
                 for (int n=0; n < len; n++){
                     if (getPlayerAt(x+n, y+n) == player)
@@ -149,7 +155,7 @@ public class GameEngine {
 
         // Check //////
         for(int y=0; y <= GRID_NUMBER-len; y++){
-            for(int x=len; x < GRID_NUMBER; x++){
+            for(int x=len; x <= GRID_NUMBER; x++){
                 int cnt = 0;
                 for (int n=0; n < len; n++){
                     if (getPlayerAt(x-n, y+n) == player)
