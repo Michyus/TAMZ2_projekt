@@ -7,4 +7,9 @@
 
     <string name="dialog_end_menu">Zpět do menu</string>
     <string name="dialog_end_rematch">Hrát znovu</string>
+
+    <string-array name="AI_array">
+        <item>Lehka</item>
+        <item>Normalni</item>
+    </string-array>
 </resources>

@@ -51,6 +51,10 @@ public class NewGameActivity extends AppCompatActivity {
         public void onClick(View v) {
             Intent intent = new Intent(NewGameActivity.this, GameActivity.class);
             intent.putExtra("aiLevel", 1);
+            intent.putExtra("size", 12);
+            intent.putExtra("count", 4);
+            intent.putExtra("name_1", "Ja");
+            intent.putExtra("name_2", "Telefon");
             startActivity(intent);
         }
     };

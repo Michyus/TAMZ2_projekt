@@ -12,6 +12,8 @@ public class GameEngine {
 
     private int GRID_NUMBER = 12;
 
+    private DBHelper games_db;
+
     public Activity gameActivity;
 
     private float gridSize;
@@ -27,6 +29,10 @@ public class GameEngine {
     public TextView textView_moveOf;
     public ImageView imageView_moveOf;
 
+    public int moves;
+
+    private boolean check = true;
+
 
     protected enum Players{
         None, Player1, Player2
@@ -41,6 +47,8 @@ public class GameEngine {
         this.countToWin = countToWin;
         this.name_1 = name_1;
         this.name_2 = name_2;
+
+        this.moves = 0;
 
         textView_moveOf = this.gameActivity.findViewById(R.id.textView_moveOf);
         imageView_moveOf = this.gameActivity.findViewById(R.id.imageView_moveOf);
@@ -60,6 +68,7 @@ public class GameEngine {
     }
 
     public void addMark(int x, int y){
+        moves++;
         if(getPlayerAt(x, y) == Players.None){
             playerGrid[x][y] = currentPlayer;
             switchPlayer();
@@ -67,6 +76,11 @@ public class GameEngine {
         Players winner = checkWhoWon();
 
         if(winner != Players.None){
+            if (this.check){
+                this.check = false;
+                saveToDatabase();
+            }
+
             new GameEndDialog(this, gameActivity);
             this.gameActivity.findViewById(R.id.gameFrame).setOnTouchListener(null);
         }
@@ -155,7 +169,7 @@ public class GameEngine {
 
         // Check //////
         for(int y=0; y <= GRID_NUMBER-len; y++){
-            for(int x=len; x <= GRID_NUMBER; x++){
+            for(int x=len; x < GRID_NUMBER; x++){
                 int cnt = 0;
                 for (int n=0; n < len; n++){
                     if (getPlayerAt(x-n, y+n) == player)
@@ -224,5 +238,16 @@ public class GameEngine {
 
     public Players getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    private void saveToDatabase(){
+        games_db = new DBHelper(gameActivity);
+
+        if(games_db.insertGame("WHO_WON_NEW", "", "", 0)){
+            Toast.makeText(gameActivity.getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(gameActivity.getApplicationContext(), "not done", Toast.LENGTH_SHORT).show();
+        }
     }
 }

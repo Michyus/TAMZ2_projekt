@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class CustomGameActivity extends AppCompatActivity {
@@ -19,6 +22,9 @@ public class CustomGameActivity extends AppCompatActivity {
 
     EditText editText_name_1;
     EditText editText_name_2;
+
+    CheckBox checkBox_AI;
+    Spinner spinner_AI;
 
     Button button_play;
 
@@ -37,12 +43,23 @@ public class CustomGameActivity extends AppCompatActivity {
         editText_name_1 = findViewById(R.id.editText_name_1);
         editText_name_2 = findViewById(R.id.editText_name_2);
 
+        checkBox_AI = findViewById(R.id.checkBox_AI);
+        spinner_AI = findViewById(R.id.spinner_AI);
+
         button_play = findViewById(R.id.button_play);
 
         seekBar_gameGridSize.setOnSeekBarChangeListener(listener_seekBar_gameGridSize);
         seekBar_countToWin.setOnSeekBarChangeListener(listener_seekBar_countToWin);
 
+        checkBox_AI.setOnClickListener(listener_chekBox_AI);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.AI_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_AI.setAdapter(adapter);
+
         button_play.setOnClickListener(listener_button_play);
+
+        spinner_AI.setEnabled(checkBox_AI.isChecked());
+        editText_name_2.setEnabled(!checkBox_AI.isChecked());
     }
 
     SeekBar.OnSeekBarChangeListener listener_seekBar_gameGridSize = new SeekBar.OnSeekBarChangeListener() {
@@ -82,6 +99,13 @@ public class CustomGameActivity extends AppCompatActivity {
         }
     };
 
+    CheckBox.OnClickListener listener_chekBox_AI = new CheckBox.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            spinner_AI.setEnabled(checkBox_AI.isChecked());
+            editText_name_2.setEnabled(!checkBox_AI.isChecked());
+        }
+    };
 
     Button.OnClickListener listener_button_play = new Button.OnClickListener(){
         @Override
@@ -93,6 +117,10 @@ public class CustomGameActivity extends AppCompatActivity {
             intent.putExtra("count", Integer.parseInt(count_str));
             intent.putExtra("name_1", editText_name_1.getText().toString());
             intent.putExtra("name_2", editText_name_2.getText().toString());
+            if(checkBox_AI.isChecked()){
+                intent.putExtra("aiLevel", spinner_AI.getSelectedItemPosition()-1);
+                intent.putExtra("name_2", spinner_AI.getSelectedItem().toString());
+            }
             startActivity(intent);
         }
     };
