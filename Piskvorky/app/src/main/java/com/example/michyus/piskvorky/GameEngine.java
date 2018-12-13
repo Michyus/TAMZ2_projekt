@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameEngine {
@@ -25,14 +27,14 @@ public class GameEngine {
 
     private String name_1;
     private String name_2;
+    private String winner_name;
 
     public TextView textView_moveOf;
     public ImageView imageView_moveOf;
 
     public int moves;
 
-    private boolean check = true;
-
+    private boolean check = true; // TODO: get rid of this
 
     protected enum Players{
         None, Player1, Player2
@@ -47,6 +49,7 @@ public class GameEngine {
         this.countToWin = countToWin;
         this.name_1 = name_1;
         this.name_2 = name_2;
+        this.winner_name = "None";
 
         this.moves = 0;
 
@@ -75,11 +78,9 @@ public class GameEngine {
         }
         Players winner = checkWhoWon();
 
-        if(winner != Players.None){
-            if (this.check){
-                this.check = false;
-                saveToDatabase();
-            }
+        if(winner != Players.None && this.check){
+            this.check = false;
+            saveToDatabase();
 
             new GameEndDialog(this, gameActivity);
             this.gameActivity.findViewById(R.id.gameFrame).setOnTouchListener(null);
@@ -118,9 +119,11 @@ public class GameEngine {
 
     public Players checkWhoWon(){
         if (hasWinner(Players.Player1, countToWin)){
+            this.winner_name = this.name_1;
             return Players.Player1;
         }
         else if (hasWinner(Players.Player2, countToWin)){
+            this.winner_name = this.name_2;
             return Players.Player2;
         }
 
@@ -243,7 +246,7 @@ public class GameEngine {
     private void saveToDatabase(){
         games_db = new DBHelper(gameActivity);
 
-        if(games_db.insertGame("WHO_WON_NEW", "", "", 0)){
+        if(games_db.insertGame(this.winner_name, "", "", 0,0,0)){
             Toast.makeText(gameActivity.getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
         }
         else{
@@ -251,3 +254,4 @@ public class GameEngine {
         }
     }
 }
+//this.name_1, this.name_2, this.moves, this.GRID_NUMBER, this.countToWin)

@@ -15,6 +15,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String GAMES_TABLE_NAME = "games";
     public static final String GAMES_COLUMN_ID = "id";
     public static final String GAMES_COLUMN_WINNER = "winner";
+    public static final String GAMES_COLUMN_NAME_1 = "name_1";
+    public static final String GAMES_COLUMN_NAME_2 = "name_2";
+    public static final String GAMES_COLUMN_MOVES = "moves";
+    public static final String GAMES_COLUMN_SIZE = "size";
+    public static final String GAMES_COLUMN_COUNT = "count";
+
 
 
     public static ArrayList<String> arrayList = new ArrayList<String>();
@@ -26,8 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //db.execSQL("create table games " + "(id integer primary key, name text)");
-        db.execSQL("CREATE TABLE games " + "(id INTEGER PRIMARY KEY, winner TEXT, name_1 TEXT, name_2 TEXT, moves INT)");
+        db.execSQL("CREATE TABLE games " + "(id INTEGER PRIMARY KEY, winner TEXT, name_1 TEXT, name_2 TEXT, moves INT, size INT, count INT)");
     }
 
     @Override
@@ -36,11 +41,16 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertGame(String winner, String name_1, String name_2, int moves)
+    public boolean insertGame(String winner, String name_1, String name_2, int moves, int size, int count)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(GAMES_COLUMN_WINNER, winner);
+        contentValues.put(GAMES_COLUMN_NAME_1, name_1);
+        contentValues.put(GAMES_COLUMN_NAME_2, name_2);
+        contentValues.put(GAMES_COLUMN_MOVES, moves);
+        contentValues.put(GAMES_COLUMN_SIZE, size);
+        contentValues.put(GAMES_COLUMN_COUNT, count);
         db.insert(GAMES_TABLE_NAME, null, contentValues);
         return true;
     }
@@ -49,20 +59,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getData(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery("select * from games where id=" + id + "", null);
-        //Cursor res =  db.rawQuery( "select * from games LIMIT 1 OFFSET "+id+"", null );
         return res;
     }
 
-    public boolean updateGame (Integer id, String name, int cost, int type)
-    {
-        //TODO update zaznam
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("winner", name);
-        db.update(GAMES_TABLE_NAME, contentValues,"id="+id,null);
-
-        return true;
-    }
 
     public void setAllGames()
     {

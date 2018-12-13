@@ -17,6 +17,7 @@ public class Settings extends AppCompatActivity {
     SharedPreferences.Editor editor;
     SharedPreferences prefs;
     boolean darkTheme;
+    DBHelper games_db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +35,13 @@ public class Settings extends AppCompatActivity {
         switch_theme.setOnClickListener(listener_theme);
 
         switch_theme.setChecked(darkTheme);
+        games_db = new DBHelper(this);
     }
 
     View.OnClickListener listener_resetStatistics = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            games_db.removeAll();
         }
     };
 
