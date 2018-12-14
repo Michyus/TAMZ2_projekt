@@ -246,7 +246,7 @@ public class GameEngine {
     private void saveToDatabase(){
         games_db = new DBHelper(gameActivity);
 
-        if(games_db.insertGame(this.winner_name, "", "", 0,0,0)){
+        if(games_db.insertGame(this.winner_name, this.name_1, this.name_2, this.moves,this.GRID_NUMBER,this.countToWin)){
             Toast.makeText(gameActivity.getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
         }
         else{
