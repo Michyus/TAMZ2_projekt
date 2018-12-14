@@ -20,6 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String GAMES_COLUMN_MOVES = "moves";
     public static final String GAMES_COLUMN_SIZE = "size";
     public static final String GAMES_COLUMN_COUNT = "count";
+    public static final String GAMES_COLUMN_AI = "ai";
 
 
 
@@ -32,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE games " + "(id INTEGER PRIMARY KEY, winner TEXT, name_1 TEXT, name_2 TEXT, moves INT, size INT, count INT)");
+        db.execSQL("CREATE TABLE games " + "(id INTEGER PRIMARY KEY, winner TEXT, name_1 TEXT, name_2 TEXT, moves INT, size INT, count INT, ai INT)");
     }
 
     @Override
@@ -41,7 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertGame(String winner, String name_1, String name_2, int moves, int size, int count)
+    public boolean insertGame(String winner, String name_1, String name_2, int moves, int size, int count, int ai)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -51,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(GAMES_COLUMN_MOVES, moves);
         contentValues.put(GAMES_COLUMN_SIZE, size);
         contentValues.put(GAMES_COLUMN_COUNT, count);
+        contentValues.put(GAMES_COLUMN_AI, ai);
         db.insert(GAMES_TABLE_NAME, null, contentValues);
         return true;
     }

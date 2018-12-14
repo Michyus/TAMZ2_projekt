@@ -22,6 +22,8 @@ public class StatisticsDetail extends AppCompatActivity {
     EditText editText_name_1;
     EditText editText_name_2;
 
+    TextView textView_winner;
+
     CheckBox checkBox_AI;
 
     private DBHelper games;
@@ -40,6 +42,8 @@ public class StatisticsDetail extends AppCompatActivity {
 
         editText_name_1 = findViewById(R.id.editText_name_1);
         editText_name_2 = findViewById(R.id.editText_name_2);
+
+        textView_winner = findViewById(R.id.textView_winner);
 
         checkBox_AI = findViewById(R.id.checkBox_AI);
 
@@ -62,10 +66,13 @@ public class StatisticsDetail extends AppCompatActivity {
                 String name_1 = rs.getString(rs.getColumnIndex(DBHelper.GAMES_COLUMN_NAME_1));
                 String name_2 = rs.getString(rs.getColumnIndex(DBHelper.GAMES_COLUMN_NAME_2));
 
+                String winner = rs.getString(rs.getColumnIndex(DBHelper.GAMES_COLUMN_WINNER));
+
 
                 int moves = rs.getInt(rs.getColumnIndex(DBHelper.GAMES_COLUMN_MOVES));
                 int size = rs.getInt(rs.getColumnIndex(DBHelper.GAMES_COLUMN_SIZE));
                 int count = rs.getInt(rs.getColumnIndex(DBHelper.GAMES_COLUMN_COUNT));
+                int ai = rs.getInt(rs.getColumnIndex(DBHelper.GAMES_COLUMN_AI));
 
                 if (!rs.isClosed())
                 {
@@ -83,7 +90,15 @@ public class StatisticsDetail extends AppCompatActivity {
                 editText_name_2.setFocusable(false);
                 editText_name_2.setClickable(false);
 
+                if (ai > 0){
+                    checkBox_AI.setChecked(true);
+                }
+                else {
+                    checkBox_AI.setChecked(false);
+                }
+                checkBox_AI.setEnabled(false);
 
+                textView_winner.setText(winner + " vyhrál!");
 
                 seekBar_gameGridSize.setProgress(size);
                 textView_gameGridSize.setText(Integer.toString(size));

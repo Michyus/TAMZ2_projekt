@@ -1,6 +1,8 @@
 package com.example.michyus.piskvorky;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CustomGameActivity extends AppCompatActivity {
 
@@ -28,11 +31,17 @@ public class CustomGameActivity extends AppCompatActivity {
 
     Button button_play;
 
+    Context context;
+
+    SharedPreferences.Editor editor;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_game);
+
+        context = this.getApplicationContext();
 
         seekBar_gameGridSize = findViewById(R.id.seekBar_gameGridSize);
         textView_gameGridSize = findViewById(R.id.textView_gameGridSize);
@@ -60,6 +69,14 @@ public class CustomGameActivity extends AppCompatActivity {
 
         spinner_AI.setEnabled(checkBox_AI.isChecked());
         editText_name_2.setEnabled(!checkBox_AI.isChecked());
+
+
+        //TODO sharePreferences
+        editor = getSharedPreferences("sharedPreferences", MODE_PRIVATE).edit();
+        prefs = getSharedPreferences("sharedPreferences", MODE_PRIVATE);
+
+        editText_name_1.setText(prefs.getString("name_1", "Name_1"));
+        editText_name_2.setText(prefs.getString("name_2", "Name_2"));
     }
 
     SeekBar.OnSeekBarChangeListener listener_seekBar_gameGridSize = new SeekBar.OnSeekBarChangeListener() {
@@ -113,14 +130,23 @@ public class CustomGameActivity extends AppCompatActivity {
             Intent intent = new Intent(CustomGameActivity.this, GameActivity.class);
             String size_str = (String) textView_gameGridSize.getText();
             String count_str = (String) textView_countToWin.getText();
+
+            editor.putString("size", size_str);
+            editor.putString("count", count_str);
+            editor.putString("name_1", editText_name_1.getText().toString());
+            editor.putString("name_2", editText_name_2.getText().toString());
+            editor.apply();
+
             intent.putExtra("size", Integer.parseInt(size_str));
             intent.putExtra("count", Integer.parseInt(count_str));
             intent.putExtra("name_1", editText_name_1.getText().toString());
             intent.putExtra("name_2", editText_name_2.getText().toString());
             if(checkBox_AI.isChecked()){
-                intent.putExtra("aiLevel", spinner_AI.getSelectedItemPosition()-1);
+                intent.putExtra("aiLevel", spinner_AI.getSelectedItemPosition()+1);
                 intent.putExtra("name_2", spinner_AI.getSelectedItem().toString());
             }
+
+            Toast.makeText(context,Integer.toString(spinner_AI.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }
     };
