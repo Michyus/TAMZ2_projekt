@@ -1,5 +1,6 @@
 package com.example.michyus.piskvorky;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -13,9 +14,15 @@ public class NewGameActivity extends AppCompatActivity {
     Button button_gameAgainstHuman;
     Button button_customGame;
 
+    Context context;
+    MediaPlayer mp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        context = this;
+        mp = MediaPlayer.create(context, R.raw.click);
 
         SharedPreferences prefs = getSharedPreferences("sharedPreferences", MODE_PRIVATE);
         boolean darkTheme = prefs.getBoolean("theme", false);
@@ -40,8 +47,13 @@ public class NewGameActivity extends AppCompatActivity {
     View.OnClickListener listener_gameAgainstHuman = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            mp.start();
             Intent intent = new Intent(NewGameActivity.this, GameActivity.class);
             intent.putExtra("aiLevel", 0);
+            intent.putExtra("size", 12);
+            intent.putExtra("count", 4);
+            intent.putExtra("name_1", "Hrac 1");
+            intent.putExtra("name_2", "Hrac 2");
             startActivity(intent);
         }
     };
@@ -49,6 +61,7 @@ public class NewGameActivity extends AppCompatActivity {
     View.OnClickListener listener_gameAgainstAI = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            mp.start();
             Intent intent = new Intent(NewGameActivity.this, GameActivity.class);
             intent.putExtra("aiLevel", 1);
             intent.putExtra("size", 12);
@@ -62,6 +75,7 @@ public class NewGameActivity extends AppCompatActivity {
     View.OnClickListener listener_customGame = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            mp.start();
             Intent intent = new Intent(NewGameActivity.this, CustomGameActivity.class);
             startActivity(intent);
         }

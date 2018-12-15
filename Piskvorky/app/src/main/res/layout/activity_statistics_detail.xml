@@ -27,6 +27,7 @@
         android:layout_marginTop="8dp"
         android:autoText="false"
         android:text="vyhral hrac 1"
+        android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

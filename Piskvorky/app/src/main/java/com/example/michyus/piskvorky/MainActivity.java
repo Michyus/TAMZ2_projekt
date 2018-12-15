@@ -1,7 +1,9 @@
 package com.example.michyus.piskvorky;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,9 +19,15 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     SharedPreferences prefs;
 
+    MediaPlayer mp;
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        context = this;
+        mp = MediaPlayer.create(context, R.raw.click);
 
         editor = getSharedPreferences("sharedPreferences", MODE_PRIVATE).edit();
         prefs = getSharedPreferences("sharedPreferences", MODE_PRIVATE);
@@ -71,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener listener_newGame = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            mp.start();
             Intent intent = new Intent(MainActivity.this, NewGameActivity.class);
             startActivity(intent);
         }
@@ -79,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener listener_statistics = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            mp.start();
             Intent intent = new Intent(MainActivity.this, Statistics.class);
             startActivity(intent);
         }
@@ -87,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener listener_settings = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            mp.start();
             Intent intent = new Intent(MainActivity.this, Settings.class);
             startActivity(intent);
         }
@@ -95,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener listener_quit = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            mp.start();
             Toast.makeText(getApplicationContext(), "listener_quit", Toast.LENGTH_SHORT).show();
         }
     };

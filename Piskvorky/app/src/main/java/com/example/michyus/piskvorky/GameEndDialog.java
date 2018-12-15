@@ -12,12 +12,12 @@ public class GameEndDialog extends AlertDialog {
         MediaPlayer mp;
         mp = MediaPlayer.create(gameEngine.gameActivity, R.raw.cuttingpaper);
 
-        setMessage("Nejake info.. kdo vyhral, cas pocet tahu...");
+        setMessage(gameEngine.winner_name + " vyhrál!");
 
         setButton(BUTTON_POSITIVE, context.getResources().getString(R.string.dialog_end_rematch), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(context, NewGameActivity.class);
+                Intent intent = new Intent(context, CustomGameActivity.class);
                 context.startActivity(intent);
             }
         });

@@ -27,7 +27,7 @@ public class GameEngine {
 
     private String name_1;
     private String name_2;
-    private String winner_name;
+    public String winner_name;
 
     public TextView textView_moveOf;
     public ImageView imageView_moveOf;
@@ -49,7 +49,7 @@ public class GameEngine {
         this.countToWin = countToWin;
         this.name_1 = name_1;
         this.name_2 = name_2;
-        this.winner_name = "None";
+        this.winner_name = "Nikdo";
 
         this.moves = 0;
 
@@ -78,10 +78,12 @@ public class GameEngine {
         }
         Players winner = checkWhoWon();
 
-        if(winner != Players.None && this.check){
+        if(winner != Players.None && this.check || moves >= this.GRID_NUMBER*this.GRID_NUMBER){
+            if (moves >= this.GRID_NUMBER*this.GRID_NUMBER){
+                this.winner_name = "Nikdo";
+            }
             this.check = false;
             saveToDatabase();
-
             new GameEndDialog(this, gameActivity);
             this.gameActivity.findViewById(R.id.gameFrame).setOnTouchListener(null);
         }
@@ -106,12 +108,54 @@ public class GameEngine {
         if (this.aiLevel == 1){
             boolean placed = false;
             while (placed == false){
-                int randomX = ThreadLocalRandom.current().nextInt(0, 12);
-                int randomY = ThreadLocalRandom.current().nextInt(0, 12);
+                int randomX = ThreadLocalRandom.current().nextInt(0, this.GRID_NUMBER);
+                int randomY = ThreadLocalRandom.current().nextInt(0, this.GRID_NUMBER);
 
                 if(getPlayerAt(randomX, randomY) == Players.None){
                     addMark(randomX, randomY);
                     placed = true;
+                }
+            }
+        }else if (this.aiLevel == 2){
+            boolean placed = false;
+            if(moves < 2){
+                while (placed == false){
+                    int randomX = ThreadLocalRandom.current().nextInt(1, this.GRID_NUMBER - 1);
+                    int randomY = ThreadLocalRandom.current().nextInt(1, this.GRID_NUMBER - 1);
+
+                    if(getPlayerAt(randomX, randomY) == Players.None){
+                        addMark(randomX, randomY);
+                        placed = true;
+                    }
+                }
+            }else {
+                for(int y=1; y < GRID_NUMBER-1; y++){
+                    for(int x=1; x < GRID_NUMBER-1; x++){
+                        if(getPlayerAt(x, y) == Players.Player2 && !placed){
+                            if (getPlayerAt(x+1, y+1) == Players.None){
+                                addMark(x+1,y+1);
+                                placed = true;
+                            } else if (getPlayerAt(x-1, y-1) == Players.None){
+                                addMark(x-1,y-1);
+                                placed = true;
+                            } else if (getPlayerAt(x+1, y-1) == Players.None){
+                                addMark(x+1,y-1);
+                                placed = true;
+                            } else if (getPlayerAt(x-1, y+1) == Players.None){
+                                addMark(x-1,y+1);
+                                placed = true;
+                            }
+                        }
+                    }
+                }
+                while (placed == false){
+                    int randomX = ThreadLocalRandom.current().nextInt(0, this.GRID_NUMBER);
+                    int randomY = ThreadLocalRandom.current().nextInt(0, this.GRID_NUMBER);
+
+                    if(getPlayerAt(randomX, randomY) == Players.None){
+                        addMark(randomX, randomY);
+                        placed = true;
+                    }
                 }
             }
         }
@@ -246,12 +290,7 @@ public class GameEngine {
     private void saveToDatabase(){
         games_db = new DBHelper(gameActivity);
 
-        if(games_db.insertGame(this.winner_name, this.name_1, this.name_2, this.moves,this.GRID_NUMBER,this.countToWin, this.aiLevel)){
-            Toast.makeText(gameActivity.getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(gameActivity.getApplicationContext(), "not done", Toast.LENGTH_SHORT).show();
-        }
+        games_db.insertGame(this.winner_name, this.name_1, this.name_2, this.moves,this.GRID_NUMBER,this.countToWin, this.aiLevel);
     }
 }
 //this.name_1, this.name_2, this.moves, this.GRID_NUMBER, this.countToWin)

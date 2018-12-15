@@ -3,6 +3,7 @@ package com.example.michyus.piskvorky;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -77,6 +78,20 @@ public class CustomGameActivity extends AppCompatActivity {
 
         editText_name_1.setText(prefs.getString("name_1", "Name_1"));
         editText_name_2.setText(prefs.getString("name_2", "Name_2"));
+        seekBar_gameGridSize.setProgress(Integer.valueOf(prefs.getString("size", "10"))-3);
+        seekBar_countToWin.setProgress(Integer.valueOf(prefs.getString("count", "3")));
+        int aiLevel = prefs.getInt("aiLevel", 0);
+        if (aiLevel-1 > 0){
+            checkBox_AI.setChecked(true);
+            spinner_AI.setSelection(aiLevel-1);
+            spinner_AI.setEnabled(true);
+            editText_name_2.setEnabled(false);
+        } else {
+            checkBox_AI.setChecked(false);
+            spinner_AI.setEnabled(false);
+            editText_name_2.setEnabled(true);
+        }
+
     }
 
     SeekBar.OnSeekBarChangeListener listener_seekBar_gameGridSize = new SeekBar.OnSeekBarChangeListener() {
@@ -127,6 +142,10 @@ public class CustomGameActivity extends AppCompatActivity {
     Button.OnClickListener listener_button_play = new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
+            MediaPlayer mp;
+            mp = MediaPlayer.create(context, R.raw.click);
+            mp.start();
+
             Intent intent = new Intent(CustomGameActivity.this, GameActivity.class);
             String size_str = (String) textView_gameGridSize.getText();
             String count_str = (String) textView_countToWin.getText();
@@ -135,7 +154,6 @@ public class CustomGameActivity extends AppCompatActivity {
             editor.putString("count", count_str);
             editor.putString("name_1", editText_name_1.getText().toString());
             editor.putString("name_2", editText_name_2.getText().toString());
-            editor.apply();
 
             intent.putExtra("size", Integer.parseInt(size_str));
             intent.putExtra("count", Integer.parseInt(count_str));
@@ -144,9 +162,10 @@ public class CustomGameActivity extends AppCompatActivity {
             if(checkBox_AI.isChecked()){
                 intent.putExtra("aiLevel", spinner_AI.getSelectedItemPosition()+1);
                 intent.putExtra("name_2", spinner_AI.getSelectedItem().toString());
+                editor.putInt("aiLevel", spinner_AI.getSelectedItemPosition()+1);
             }
 
-            Toast.makeText(context,Integer.toString(spinner_AI.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
+            editor.apply();
             startActivity(intent);
         }
     };

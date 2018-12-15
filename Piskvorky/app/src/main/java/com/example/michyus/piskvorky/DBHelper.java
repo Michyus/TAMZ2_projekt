@@ -73,7 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
-            arrayList.add(res.getString(res.getColumnIndex(GAMES_COLUMN_WINNER)));
+            arrayList.add(res.getString(res.getColumnIndex(GAMES_COLUMN_NAME_1)) + "   X   " + res.getString(res.getColumnIndex(GAMES_COLUMN_NAME_2)) + "   |   " + res.getString(res.getColumnIndex(GAMES_COLUMN_WINNER)));
             res.moveToNext();
         }
     }

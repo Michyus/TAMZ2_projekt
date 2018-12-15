@@ -1,5 +1,7 @@
 package com.example.michyus.piskvorky;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -12,8 +14,11 @@ public class TouchListener implements View.OnTouchListener {
     private int stopX;
     private int stopY;
 
+    MediaPlayer mp;
+
     public TouchListener(GameEngine gameEngine){
         this.gameEngine = gameEngine;
+        this.mp = MediaPlayer.create(gameEngine.gameActivity, R.raw.click);
     }
 
     @Override
@@ -36,6 +41,7 @@ public class TouchListener implements View.OnTouchListener {
         if (startX < gameEngine.getGridNumber() && startY < gameEngine.getGridNumber()){
             if (startX == stopX && startY == stopY){
                 gameEngine.addMark(startX, startY);
+                mp.start();
             }
         }
 
