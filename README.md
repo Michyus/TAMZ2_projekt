@@ -1,11 +1,9 @@
 # TAMZ2_projekt
-######Piskvorky
+###### **TODO**
 
-**TODO**
-
-- [ ] Database
-- [ ] Advanced GUI
-- [ ] Networking/Bluetooth
+- [X] Database
+- [X] Advanced GUI
+- [ ] Notifications
 - [X] 2D Game Canvas
 - [X] Multimedia
 - [X] Persistant Storage
