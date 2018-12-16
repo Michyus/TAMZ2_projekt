@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Piškvorky</string>
+
+    <string name="new_game">Nová hra</string>
+    <string name="statistics">Statistiky</string>
+    <string name="settings">Nastavení</string>
+    <string name="quit">Konec</string>
+
+    <string name="game_against_AI">Hra proti AI</string>
+    <string name="game_for_two_players">Hra pro 2 hráče</string>
+    <string name="custom_game">Vlastní hra</string>
+
+    <string name="statistics_games">ODEHRÁNO</string>
+    <string name="statistics_played">HER</string>
+    <string name="statistics_result">Výsledek</string>
+
+    <string name="size_of_grid">Celikost herní plochy</string>
+    <string name="count_needed_to_win">Počet polí pro výhru</string>
+    <string name="play">Hrát</string>
+
+    <string name="dialog_start_title">Kdo začne?</string>
+    <string name="dialog_start_player1">Hráč 1</string>
+    <string name="dialog_start_player2">Hráč 2</string>
+
+    <string name="won">vyhrál</string>
+
+    <string name="dialog_end_menu">Zpět do menu</string>
+    <string name="dialog_end_rematch">Hrát znovu</string>
+
+    <string name="settings_reset">Promazání statistik</string>
+
+    <string-array name="AI_array">
+        <item>Lehka</item>
+        <item>Normalni</item>
+    </string-array>
+</resources>

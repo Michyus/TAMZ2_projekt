@@ -1,15 +1,37 @@
 <resources>
-    <string name="app_name">Piskvorky</string>
+    <string name="app_name">Gomoku</string>
 
-    <string name="dialog_start_title">Kdo začne?</string>
-    <string name="dialog_start_player1">Hráč 1</string>
-    <string name="dialog_start_player2">Hráč 2</string>
 
-    <string name="dialog_end_menu">Zpět do menu</string>
-    <string name="dialog_end_rematch">Hrát znovu</string>
+    <string name="new_game">New game</string>
+    <string name="statistics">Statistics</string>
+    <string name="settings">Settings</string>
+    <string name="quit">Quit</string>
+
+    <string name="game_against_AI">Game against AI</string>
+    <string name="game_for_two_players">Game for 2 players</string>
+    <string name="custom_game">Custom game</string>
+
+    <string name="statistics_games">GAMES</string>
+    <string name="statistics_played">PLAYED</string>
+    <string name="statistics_result">Result</string>
+
+    <string name="size_of_grid">Size of grid</string>
+    <string name="count_needed_to_win">Count needed to win</string>
+    <string name="play">Play</string>
+
+    <string name="dialog_start_title">Who will start?</string>
+    <string name="dialog_start_player1">Player 1</string>
+    <string name="dialog_start_player2">Player 2</string>
+
+    <string name="won">has won</string>
+
+    <string name="dialog_end_menu">MENU</string>
+    <string name="dialog_end_rematch">AGAIN</string>
+
+    <string name="settings_reset">Reset statistics</string>
 
     <string-array name="AI_array">
-        <item>Lehka</item>
-        <item>Normalni</item>
+        <item>Easy</item>
+        <item>Normal</item>
     </string-array>
 </resources>

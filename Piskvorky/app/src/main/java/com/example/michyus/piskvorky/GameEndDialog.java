@@ -12,7 +12,7 @@ public class GameEndDialog extends AlertDialog {
         MediaPlayer mp;
         mp = MediaPlayer.create(gameEngine.gameActivity, R.raw.cuttingpaper);
 
-        setMessage(gameEngine.winner_name + " vyhrál!");
+        setMessage(gameEngine.winner_name + " " + context.getResources().getString(R.string.won));
 
         setButton(BUTTON_POSITIVE, context.getResources().getString(R.string.dialog_end_rematch), new OnClickListener() {
             @Override

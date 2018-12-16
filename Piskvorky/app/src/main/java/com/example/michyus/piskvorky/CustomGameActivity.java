@@ -71,8 +71,6 @@ public class CustomGameActivity extends AppCompatActivity {
         spinner_AI.setEnabled(checkBox_AI.isChecked());
         editText_name_2.setEnabled(!checkBox_AI.isChecked());
 
-
-        //TODO sharePreferences
         editor = getSharedPreferences("sharedPreferences", MODE_PRIVATE).edit();
         prefs = getSharedPreferences("sharedPreferences", MODE_PRIVATE);
 

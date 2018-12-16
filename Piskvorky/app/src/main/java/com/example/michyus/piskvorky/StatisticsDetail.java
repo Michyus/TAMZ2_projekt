@@ -53,16 +53,13 @@ public class StatisticsDetail extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras !=null)
         {
-            //ziskam ID ktere se ma editovat/zobrazit/mazat poslane z main aktivity
             int value = extras.getInt("id");
             if (value >0)
             {
-                //z database vytahnu zaznam pod hledanym ID a ulozim do id_To_Update
                 Cursor rs = games.getData(value);
                 id_To_Update = value;
                 rs.moveToFirst();
 
-                //vytahnu zaznam se jmenem
                 String name_1 = rs.getString(rs.getColumnIndex(DBHelper.GAMES_COLUMN_NAME_1));
                 String name_2 = rs.getString(rs.getColumnIndex(DBHelper.GAMES_COLUMN_NAME_2));
 
@@ -98,7 +95,7 @@ public class StatisticsDetail extends AppCompatActivity {
                 }
                 checkBox_AI.setEnabled(false);
 
-                textView_winner.setText(winner + " vyhrál!");
+                textView_winner.setText(winner + " " + this.getResources().getString(R.string.won));
 
                 seekBar_gameGridSize.setProgress(size);
                 textView_gameGridSize.setText(Integer.toString(size));

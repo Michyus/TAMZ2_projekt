@@ -10,8 +10,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GameEngine {
 
-    //TODO remove UI updates from GameEngine and move them to separate class
-
     private int GRID_NUMBER = 12;
 
     private DBHelper games_db;
@@ -34,7 +32,7 @@ public class GameEngine {
 
     public int moves;
 
-    private boolean check = true; // TODO: get rid of this
+    private boolean check = true;
 
     protected enum Players{
         None, Player1, Player2
@@ -78,9 +76,16 @@ public class GameEngine {
         }
         Players winner = checkWhoWon();
 
-        if(winner != Players.None && this.check || moves >= this.GRID_NUMBER*this.GRID_NUMBER){
+        if(winner != Players.None && this.check || moves > this.GRID_NUMBER*this.GRID_NUMBER){
             if (moves >= this.GRID_NUMBER*this.GRID_NUMBER){
                 this.winner_name = "Nikdo";
+            }else {
+                if (winner == Players.Player1){
+                    this.winner_name = name_1;
+                }
+                else {
+                    this.winner_name = name_2;
+                }
             }
             this.check = false;
             saveToDatabase();
@@ -293,4 +298,3 @@ public class GameEngine {
         games_db.insertGame(this.winner_name, this.name_1, this.name_2, this.moves,this.GRID_NUMBER,this.countToWin, this.aiLevel);
     }
 }
-//this.name_1, this.name_2, this.moves, this.GRID_NUMBER, this.countToWin)

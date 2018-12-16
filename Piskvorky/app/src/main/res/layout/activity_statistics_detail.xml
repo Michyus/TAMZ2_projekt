@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:autoText="false"
-        android:text="Výsledek"
+        android:text="@string/statistics_result"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:text="Počet poli pro výhru"
+        android:text="@string/count_needed_to_win"
         app:layout_constraintBottom_toTopOf="@+id/seekBar_countToWin"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:text="Velikost herni plochy"
+        android:text="@string/size_of_grid"
         app:layout_constraintBottom_toTopOf="@+id/seekBar_gameGridSize"
         app:layout_constraintStart_toStartOf="parent" />
 
